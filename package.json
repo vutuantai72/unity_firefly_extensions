@@ -1,0 +1,13 @@
+{
+  "name": "com.firefly.extension",
+  "version": "1.0.0",
+  "displayName": "Firefly Extensions",
+  "description": "Common extensions and helpers for Unity projects.",
+  "unity": "6000.0",
+  "unityRelease": "0b5",
+  "author": {
+    "name": "Tai Vu",
+    "email": "vutuantai72@gmail.com",
+    "url": "https://www.unity3d.com"
+  }
+}
