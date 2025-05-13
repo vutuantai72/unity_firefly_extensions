@@ -16,18 +16,37 @@ namespace FireflyExtensions
                 (list[i], list[j]) = (list[j], list[i]);
             }
         }
-        
+
         public static NativeArray<TDest> ToNativeArray<TSource, TDest>(
-                this List<TSource> sourceList,
-                Func<TSource, TDest> convertFunc,
-                Allocator allocator)
-                where TDest : struct
+            this List<TSource> sourceList,
+            Func<TSource, TDest> convertFunc,
+            Allocator allocator)
+            where TDest : struct
+        {
+            var nativeArray =
+                new NativeArray<TDest>(sourceList.Count, allocator, NativeArrayOptions.UninitializedMemory);
+            for (int i = 0; i < sourceList.Count; i++)
             {
-                var nativeArray = new NativeArray<TDest>(sourceList.Count, allocator, NativeArrayOptions.UninitializedMemory);
-                for (int i = 0; i < sourceList.Count; i++) {
-                    nativeArray[i] = convertFunc(sourceList[i]);
-                }
-                return nativeArray;
+                nativeArray[i] = convertFunc(sourceList[i]);
             }
+
+            return nativeArray;
+        }
+        
+        public static NativeList<TDest> ToNativeList<TSource, TDest>(
+            this List<TSource> sourceList,
+            Func<TSource, TDest> convertFunc,
+            Allocator allocator)
+            where TDest : unmanaged
+        {
+            var nativeList = new NativeList<TDest>(allocator);
+
+            foreach (var s in sourceList)
+            {
+                nativeList.Add(convertFunc(s));
+            }
+
+            return nativeList;
+        }
     }
 }
