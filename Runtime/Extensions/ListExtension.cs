@@ -48,5 +48,21 @@ namespace FireflyExtensions
 
             return nativeList;
         }
+        public static NativeList<T> ToNativeList<T>(
+            this NativeList<T> sourceList,
+            Func<T, bool> condition,
+            Allocator allocator)
+            where T : unmanaged
+        {
+            var result = new NativeList<T>(sourceList.Length, allocator);
+
+            foreach (var s in sourceList)
+            {
+                if (condition(s))
+                    result.Add(s);
+            }
+
+            return result;
+        }
     }
 }
